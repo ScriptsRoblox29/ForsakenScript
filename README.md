@@ -1,10 +1,10 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-   Name = "Forsaken",
+   Name = "Redux exploit",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "Rayfield Interface Suite",
-   LoadingSubtitle = "by Sirius",
+   LoadingSubtitle = "by Femboy Hub",
    ShowText = "Rayfield", -- for mobile users to unhide rayfield, change if you'd like
    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -16,7 +16,7 @@ local Window = Rayfield:CreateWindow({
    ConfigurationSaving = {
       Enabled = true,
       FolderName = nil, -- Create a custom folder for your hub/game
-      FileName = "Big Hub"
+      FileName = "Big Hub right"
    },
 
    Discord = {
@@ -35,4 +35,18 @@ local Window = Rayfield:CreateWindow({
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
       Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
+})
+
+
+local MainTab = Window:CreateTab("Main", 4483362458) -- Title, Image
+
+local Section = MainTab:CreateSection("Welcome! This is a Redux game exploit. It's very OP!")
+
+local PlayerTab = Window:CreateTab("Player", 4483362458) -- Title, Image
+
+local Button = PlayerTab:CreateButton({
+   Name = "More faster",
+   Callback = function()
+   -- The function that takes place when the button is pressed
+   end,
 })
