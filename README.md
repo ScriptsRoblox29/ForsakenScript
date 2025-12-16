@@ -3,9 +3,9 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "Redux exploit",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "Rayfield Interface Suite",
+   LoadingTitle = "Loading yeahh",
    LoadingSubtitle = "by Femboy Hub",
-   ShowText = "Rayfield", -- for mobile users to unhide rayfield, change if you'd like
+   ShowText = "Femboy Hub", -- for mobile users to unhide rayfield, change if you'd like
    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
    ToggleUIKeybind = "K", -- The keybind to toggle the UI visibility (string like "K" or Enum.KeyCode)
@@ -60,36 +60,25 @@ local Button = PlayerTab:CreateButton({
 
         if Character:GetAttribute("FastBoost") then
             Character:SetAttribute("FastBoost", false)
-
-            local vel = Root:FindFirstChild("FastBoostVelocity")
-            local att = Root:FindFirstChild("FastBoostAttachment")
-            if vel then vel:Destroy() end
-            if att then att:Destroy() end
-
             return
         end
 
         Character:SetAttribute("FastBoost", true)
 
-        local attachment = Instance.new("Attachment")
-        attachment.Name = "FastBoostAttachment"
-        attachment.Parent = Root
+        local connection
+        connection = RunService.Heartbeat:Connect(function(dt)
+            if not Character:GetAttribute("FastBoost") then
+                connection:Disconnect()
+                return
+            end
 
-        local velocity = Instance.new("LinearVelocity")
-        velocity.Name = "FastBoostVelocity"
-        velocity.Attachment0 = attachment
-        velocity.MaxForce = math.huge
-        velocity.RelativeTo = Enum.ActuatorRelativeTo.World
-        velocity.Parent = Root
-
-        RunService.Heartbeat:Connect(function()
-            if not Character:GetAttribute("FastBoost") then return end
+            if Humanoid.FloorMaterial == Enum.Material.Air then
+                return
+            end
 
             local dir = Humanoid.MoveDirection
             if dir.Magnitude > 0 then
-                velocity.VectorVelocity = dir * 55
-            else
-                velocity.VectorVelocity = Vector3.zero
+                Root.CFrame = Root.CFrame + (dir * 30 * dt)
             end
         end)
     end,
