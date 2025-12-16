@@ -45,8 +45,52 @@ local Section = MainTab:CreateSection("Welcome! This is a Redux game exploit. It
 local PlayerTab = Window:CreateTab("Player", 4483362458) -- Title, Image
 
 local Button = PlayerTab:CreateButton({
-   Name = "More faster",
-   Callback = function()
-   -- The function that takes place when the button is pressed
-   end,
+    Name = "More faster",
+    Callback = function()
+        local Players = game:GetService("Players")
+        local RunService = game:GetService("RunService")
+
+        local Player = Players.LocalPlayer
+        local Character = Player.Character
+        if not Character then return end
+
+        local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+        local Root = Character:FindFirstChild("HumanoidRootPart")
+        if not Humanoid or not Root then return end
+
+        if Character:GetAttribute("FastBoost") then
+            Character:SetAttribute("FastBoost", false)
+
+            local vel = Root:FindFirstChild("FastBoostVelocity")
+            local att = Root:FindFirstChild("FastBoostAttachment")
+            if vel then vel:Destroy() end
+            if att then att:Destroy() end
+
+            return
+        end
+
+        Character:SetAttribute("FastBoost", true)
+
+        local attachment = Instance.new("Attachment")
+        attachment.Name = "FastBoostAttachment"
+        attachment.Parent = Root
+
+        local velocity = Instance.new("LinearVelocity")
+        velocity.Name = "FastBoostVelocity"
+        velocity.Attachment0 = attachment
+        velocity.MaxForce = math.huge
+        velocity.RelativeTo = Enum.ActuatorRelativeTo.World
+        velocity.Parent = Root
+
+        RunService.Heartbeat:Connect(function()
+            if not Character:GetAttribute("FastBoost") then return end
+
+            local dir = Humanoid.MoveDirection
+            if dir.Magnitude > 0 then
+                velocity.VectorVelocity = dir * 55
+            else
+                velocity.VectorVelocity = Vector3.zero
+            end
+        end)
+    end,
 })
